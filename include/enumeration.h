@@ -18,68 +18,12 @@
 #ifndef _ENUMERATION_H_
 #define _ENUMERATION_H_
 
+#include "symbol.h"
 #include <iostream>
 #include <cassert>
 
 namespace combinatorics
 {
-  class symbol
-  {
-    friend std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol);
-  public:
-    inline symbol(unsigned int p_index,
-		  unsigned int p_number);
-    inline unsigned int get_index(void) const;
-    inline unsigned int get_number(void) const;
-    inline void decr(void);
-    inline void incr(void);
-  private:
-    unsigned int m_index;
-    unsigned int m_number;
-    unsigned int m_max_number;
-  };
-
-  std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol)
-    {
-      p_stream << (char)('A' - 1 + p_symbol.m_index) ;
-      return p_stream;
-    }
-
-  //------------------------------------------------------------------------------
-  symbol::symbol(unsigned int p_index,
-		 unsigned int p_number):
-    m_index(p_index),
-    m_number(p_number),
-    m_max_number(p_number)
-      {
-      }
-
-    //------------------------------------------------------------------------------
-    unsigned int symbol::get_index(void) const
-    {
-      return m_index;
-    }
-
-    //------------------------------------------------------------------------------
-    unsigned int symbol::get_number(void) const
-    {
-      return m_number;
-    }
-
-    //------------------------------------------------------------------------------
-    void symbol::decr(void)
-    {
-      assert(m_number);
-      --m_number;
-    }
-
-    //------------------------------------------------------------------------------
-    void symbol::incr(void)
-    {
-      assert(m_number < m_max_number);
-      ++m_number;
-    }
-
     //------------------------------------------------------------------------------
     void enumerate(void)
     {
