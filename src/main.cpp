@@ -23,8 +23,7 @@ int main(int argc,char ** argv)
 {
   try
     {
-      enumerate();
-
+      combinatorics::enumerate();
     }
   catch(quicky_exception::quicky_runtime_exception & e)
     {
