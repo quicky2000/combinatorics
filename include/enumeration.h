@@ -28,9 +28,10 @@ namespace combinatorics
     void enumerate(void)
     {
       symbol l_symbol_table[3] = {symbol(1,1),symbol(2,2),symbol(3,3)};
-      unsigned int l_nb_symbol = 3; 
-      unsigned int l_word[6];
-      for(unsigned int l_index = 0 ; l_index < 6 ; ++l_index)
+      unsigned int l_nb_symbol = 3;
+      unsigned int l_word_size = 6;
+      unsigned int * l_word = new unsigned int[l_word_size];
+      for(unsigned int l_index = 0 ; l_index < l_word_size ; ++l_index)
 	{
 	  l_word[l_index] = 0;
 	}
@@ -51,16 +52,16 @@ namespace combinatorics
 	      ++l_index;
 	    }
 
-	  if(6 == l_index)
+	  if(l_word_size == l_index)
 	    {
 	      std::cout << l_count << "\t" ;
-	      for(unsigned int l_display_index = 0 ; l_display_index < 6; ++l_display_index)
+	      for(unsigned int l_display_index = 0 ; l_display_index < l_word_size; ++l_display_index)
 		{
 		  std::cout << (char)('A' - 1 + l_word[l_display_index]);
 		}
 	      std::cout << std::endl ;
 	      ++l_count;
-	      l_index = 5;
+	      l_index = l_word_size - 1;
 	      //	  l_symbol_table[l_word[l_index] - 1].incr();
 	      //	  l_word[l_index] = 0;
 	      //	  l_index = 4;
@@ -104,6 +105,7 @@ namespace combinatorics
 		}
 	    }
 	}
+      delete[] l_word;
     }
 }
 #endif // _ENUMERATION_H_
