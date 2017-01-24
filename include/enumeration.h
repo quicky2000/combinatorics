@@ -52,7 +52,7 @@ namespace combinatorics
     while(!l_end)
       {
 	// Iterate along empty part of word and fill it with available symbols
-	if(0 == l_word[l_index])
+	if(l_index < l_word_size && 0 == l_word[l_index])
 	  {
 	    unsigned int l_symbol_index = 0;
 	    while(0 == l_symbol_table[l_symbol_index].get_number())
