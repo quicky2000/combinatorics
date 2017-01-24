@@ -18,28 +18,36 @@
 #ifndef _ENUMERATION_H_
 #define _ENUMERATION_H_
 
+#include "quicky_exception.h"
 #include "symbol.h"
 #include <iostream>
 #include <cassert>
+#include <vector>
 
 namespace combinatorics
 {
   /**
      Method designed to enumerate all possible combinations of a list of symbols
-     Algorithm is designed considering all symbols are used
+     @param p_symbols List of symbols
+     @param p_word_size size of word to be generated. It must not be greater
+     than total number of symbols
   */
-  void enumerate(void)
+  void enumerate(const std::vector<symbol> & p_symbols, unsigned int p_word_size = 0)
   {
-    symbol l_symbol_table[3] = {symbol(1,1),symbol(2,2),symbol(3,3)};
-    unsigned int l_nb_symbol = 3;
-
-    // Computing word size ie total number of symbols
-    unsigned int l_word_size = 0;
+    std::vector<symbol> l_symbol_table(p_symbols);
+    unsigned int l_nb_symbol = l_symbol_table.size();
+    unsigned int l_total_nb_symbol = 0;
     for(unsigned int l_index = 0; l_index < l_nb_symbol; ++l_index)
       {
-	l_word_size += l_symbol_table[l_index].get_number();
+	l_total_nb_symbol += l_symbol_table[l_index].get_number();
       }
+    // Computing word size ie total number of symbols
+    unsigned int l_word_size = p_word_size ? p_word_size : l_total_nb_symbol;
 
+    if(l_word_size > l_total_nb_symbol)
+      {
+	throw quicky_exception::quicky_runtime_exception("Word size is greater than total number of symbols",__LINE__,__FILE__);
+      }
     // Initialise word
     unsigned int * l_word = new unsigned int[l_word_size];
     for(unsigned int l_index = 0 ; l_index < l_word_size ; ++l_index)

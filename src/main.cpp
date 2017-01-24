@@ -23,7 +23,8 @@ int main(int argc,char ** argv)
 {
   try
     {
-      combinatorics::enumerate();
+      std::vector<combinatorics::symbol> l_symbols = {combinatorics::symbol(1,1),combinatorics::symbol(2,2),combinatorics::symbol(3,3)};
+      combinatorics::enumerate(l_symbols);
     }
   catch(quicky_exception::quicky_runtime_exception & e)
     {
