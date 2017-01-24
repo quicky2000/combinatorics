@@ -18,14 +18,14 @@
 #ifndef _ENUMERATION_H_
 #define _ENUMERATION_H_
 
-#include "quicky_exception.h"
-#include "symbol.h"
+#include "enumerator.h"
 #include <iostream>
 #include <cassert>
 #include <vector>
 
 namespace combinatorics
 {
+
   /**
      Method designed to enumerate all possible combinations of a list of symbols
      @param p_symbols List of symbols
@@ -34,102 +34,11 @@ namespace combinatorics
   */
   void enumerate(const std::vector<symbol> & p_symbols, unsigned int p_word_size = 0)
   {
-    std::vector<symbol> l_symbol_table(p_symbols);
-    unsigned int l_nb_symbol = l_symbol_table.size();
-    unsigned int l_total_nb_symbol = 0;
-    for(unsigned int l_index = 0; l_index < l_nb_symbol; ++l_index)
+    enumerator l_enumerator(p_symbols,p_word_size);
+    while(l_enumerator.generate())
       {
-	l_total_nb_symbol += l_symbol_table[l_index].get_number();
+	l_enumerator.display_word();
       }
-    // Computing word size ie total number of symbols
-    unsigned int l_word_size = p_word_size ? p_word_size : l_total_nb_symbol;
-
-    if(l_word_size > l_total_nb_symbol)
-      {
-	throw quicky_exception::quicky_runtime_exception("Word size is greater than total number of symbols",__LINE__,__FILE__);
-      }
-    // Initialise word
-    unsigned int * l_word = new unsigned int[l_word_size];
-    for(unsigned int l_index = 0 ; l_index < l_word_size ; ++l_index)
-      {
-	l_word[l_index] = 0;
-      }
-    unsigned int l_index = 0;
-    unsigned int l_count = 0;
-    bool l_end = false;
-    while(!l_end)
-      {
-	// Iterate along empty part of word and fill it with available symbols
-	if(l_index < l_word_size && 0 == l_word[l_index])
-	  {
-	    unsigned int l_symbol_index = 0;
-	    while(0 == l_symbol_table[l_symbol_index].get_number())
-	      {
-		++l_symbol_index;
-	      }
-	    l_word[l_index] = l_symbol_table[l_symbol_index].get_index();
-	    l_symbol_table[l_symbol_index].decr();
-	    ++l_index;
-	  }
-	// Check if end of word is reached
-	if(l_word_size == l_index)
-	  {
-	    // DIsplay word
-	    std::cout << l_count << "\t" ;
-	    for(unsigned int l_display_index = 0 ; l_display_index < l_word_size; ++l_display_index)
-	      {
-		std::cout << (char)('A' - 1 + l_word[l_display_index]);
-	      }
-	    std::cout << std::endl ;
-	    ++l_count;
-
-	    // Go back along word to prepare next iteration
-	    l_index = l_word_size - 1;
-	    bool l_reverse_end = false;
-	    while(!l_reverse_end)
-	      {
-		// In case item already reached end of symbol list reinit it and go to previous index
-		if(l_nb_symbol == l_word[l_index])
-		  {
-		    l_symbol_table[l_word[l_index] - 1].incr();
-		    l_word[l_index] = 0;
-		    if(l_index)
-		      {
-			--l_index;
-		      }
-		    else
-		      {
-			l_end = true;
-			l_reverse_end = true;
-		      }
-		  }
-		else
-		  {
-		    // Go to next value for current item
-		    unsigned int l_old = l_word[l_index];
-		    l_symbol_table[l_old - 1].incr();
-		    l_word[l_index] = 0;
-		    for(unsigned int l_candidate = l_old + 1; l_candidate <= l_nb_symbol && ! l_reverse_end; ++ l_candidate)
-		      {
-			// if a symbol is available then choose it
-			if(l_symbol_table[l_candidate - 1].get_number())
-			  {
-			    l_word[l_index] = l_candidate;
-			    l_symbol_table[l_candidate - 1].decr();
-			    ++l_index;
-			    l_reverse_end = true;
-			  }
-		      }
-		    // If no new value availabe then continue to go back
-		    if(!l_reverse_end)
-		      {
-			--l_index;
-		      }
-		  }
-	      }
-	  }
-      }
-    delete[] l_word;
   }
 }
 #endif // _ENUMERATION_H_
