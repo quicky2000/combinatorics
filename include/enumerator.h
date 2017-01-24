@@ -64,6 +64,22 @@ namespace combinatorics
      */
     inline ~enumerator(void);
   private:
+    /**
+       Remove value from index of word, increment corresponding number and
+       return the value that was stored at index
+       @param index in the word
+       @return value that was stored at index
+     */
+    inline unsigned int release(unsigned int p_index);
+
+    /**
+       Set value at index of word, decrement corresponding number
+       @param index in the word
+       @param value to store at index
+     */
+    inline void take(unsigned int p_index,
+		     unsigned int p_value
+		     );
     std::vector<symbol> m_symbol_table;
     unsigned int * m_word;
     unsigned int m_total_nb_symbol;
@@ -106,6 +122,25 @@ namespace combinatorics
     }
 
   //----------------------------------------------------------------------------
+  unsigned int enumerator::release(unsigned int p_index)
+  {
+    assert(p_index < m_word_size);
+    unsigned int l_old = m_word[p_index];
+    m_symbol_table[l_old - 1].incr();
+    m_word[p_index] = 0;
+    return l_old;
+  }
+
+  //----------------------------------------------------------------------------
+  void enumerator::take(unsigned int p_index,
+			unsigned int p_value
+			)
+  {
+    m_word[p_index] = p_value;
+    m_symbol_table[p_value - 1].decr();
+  }
+
+  //----------------------------------------------------------------------------
   bool enumerator::generate(void)
   {
     if(m_continu)
@@ -125,8 +160,7 @@ namespace combinatorics
 		    // In case item already reached end of symbol list reinit it and go to previous index
 		    if(m_symbol_table.size() == m_word[m_index])
 		      {
-			m_symbol_table[m_word[m_index] - 1].incr();
-			m_word[m_index] = 0;
+			release(m_index);
 			if(m_index)
 			  {
 			    --m_index;
@@ -141,9 +175,7 @@ namespace combinatorics
 		    else
 		      {
 			// Go to next value for current item
-			unsigned int l_old = m_word[m_index];
-			m_symbol_table[l_old - 1].incr();
-			m_word[m_index] = 0;
+			unsigned int l_old = release(m_index);
 			for(unsigned int l_candidate = l_old + 1;
 			    l_candidate <= m_symbol_table.size() && ! l_reverse_end;
 			    ++ l_candidate
@@ -152,8 +184,7 @@ namespace combinatorics
 			    // if a symbol is available then choose it
 			    if(m_symbol_table[l_candidate - 1].get_number())
 			      {
-				m_word[m_index] = l_candidate;
-				m_symbol_table[l_candidate - 1].decr();
+				take(m_index, l_candidate);
 				++m_index;
 				l_reverse_end = true;
 			      }
@@ -174,8 +205,7 @@ namespace combinatorics
 		  {
 		    ++l_symbol_index;
 		  }
-		m_word[m_index] = m_symbol_table[l_symbol_index].get_index();
-		m_symbol_table[l_symbol_index].decr();
+		take(m_index,m_symbol_table[l_symbol_index].get_index());
 		++m_index;
 	      }
 	    l_generation_end |= m_index == m_word_size;
