@@ -125,6 +125,7 @@ namespace combinatorics
   unsigned int enumerator::release(unsigned int p_index)
   {
     assert(p_index < m_word_size);
+    assert(m_word[p_index]);
     unsigned int l_old = m_word[p_index];
     m_symbol_table[l_old - 1].incr();
     m_word[p_index] = 0;
