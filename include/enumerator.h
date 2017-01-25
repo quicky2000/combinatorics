@@ -60,6 +60,15 @@ namespace combinatorics
     inline void display_word(void)const;
 
     /**
+       Set word
+       @param pointer on word
+       @param word size. it should be less or equal than enumerator word size
+     */
+    inline void set_word(unsigned int * p_word,
+			 unsigned int p_word_size
+			 );
+
+    /**
        Destructor
      */
     inline ~enumerator(void);
@@ -139,6 +148,37 @@ namespace combinatorics
   {
     m_word[p_index] = p_value;
     m_symbol_table[p_value - 1].decr();
+  }
+
+  //----------------------------------------------------------------------------
+  void enumerator::set_word(unsigned int * p_word,
+			    unsigned int p_word_size
+			    )
+  {
+    assert(p_word_size <= m_word_size);
+
+    // Set continu to true to be able to call generate
+    m_continu = true;
+
+    // Copy word
+    for(m_index = 0;
+	m_index < p_word_size;
+	++m_index
+	)
+      {
+	take(m_index,p_word[m_index]);
+      }
+    // Initialise remaining part of word
+    for(unsigned int l_index = m_index;
+	l_index < m_word_size;
+	++l_index
+	)
+      {
+	if(m_word[m_index])
+	  {
+	    release(m_index);
+	  }
+      }
   }
 
   //----------------------------------------------------------------------------
