@@ -98,6 +98,13 @@ namespace combinatorics
     inline void take(unsigned int p_index,
 		     unsigned int p_value
 		     );
+
+    /**
+       Method to go back and prepare next iteration
+       @return return true if go_back could not prepare a new iteration
+     */
+    inline bool go_back(void);
+
     std::vector<symbol> m_symbol_table;
     unsigned int * m_word;
     unsigned int m_total_nb_symbol;
@@ -169,6 +176,55 @@ namespace combinatorics
   }
 
   //----------------------------------------------------------------------------
+  bool enumerator::go_back(void)
+  {
+    bool l_generation_end = false;
+    bool l_reverse_end = false;
+    while(!l_reverse_end)
+      {
+	// In case item already reached end of symbol list reinit it and go to previous index
+	if(m_symbol_table.size() == m_word[m_index])
+	  {
+	    release(m_index);
+	    if(m_index)
+	      {
+		--m_index;
+	      }
+	    else
+	      {
+		m_continu = false;
+		l_generation_end = true;
+		l_reverse_end = true;
+	      }
+	  }
+	else
+	  {
+	    // Go to next value for current item
+	    unsigned int l_old = release(m_index);
+	    for(unsigned int l_candidate = l_old + 1;
+		l_candidate <= m_symbol_table.size() && ! l_reverse_end;
+		++ l_candidate
+		)
+	      {
+		// if a symbol is available then choose it
+		if(m_symbol_table[l_candidate - 1].get_number())
+		  {
+		    take(m_index, l_candidate);
+		    ++m_index;
+		    l_reverse_end = true;
+		  }
+	      }
+	    // If no new value availabe then continue to go back
+	    if(!l_reverse_end)
+	      {
+		--m_index;
+	      }
+	  }
+      }
+    return l_generation_end;
+  }
+
+  //----------------------------------------------------------------------------
   void enumerator::set_word(unsigned int * p_word,
 			    unsigned int p_word_size
 			    )
@@ -212,48 +268,7 @@ namespace combinatorics
 	      {
 		// Go back along word to prepare next iteration
 		m_index = m_word_size - 1;
-		bool l_reverse_end = false;
-		while(!l_reverse_end)
-		  {
-		    // In case item already reached end of symbol list reinit it and go to previous index
-		    if(m_symbol_table.size() == m_word[m_index])
-		      {
-			release(m_index);
-			if(m_index)
-			  {
-			    --m_index;
-			  }
-			else
-			  {
-			    m_continu = false;
-			    l_generation_end = true;
-			    l_reverse_end = true;
-			  }
-		      }
-		    else
-		      {
-			// Go to next value for current item
-			unsigned int l_old = release(m_index);
-			for(unsigned int l_candidate = l_old + 1;
-			    l_candidate <= m_symbol_table.size() && ! l_reverse_end;
-			    ++ l_candidate
-			    )
-			  {
-			    // if a symbol is available then choose it
-			    if(m_symbol_table[l_candidate - 1].get_number())
-			      {
-				take(m_index, l_candidate);
-				++m_index;
-				l_reverse_end = true;
-			      }
-			  }
-			// If no new value availabe then continue to go back
-			if(!l_reverse_end)
-			  {
-			    --m_index;
-			  }
-		      }
-		  }
+		l_generation_end = go_back();
 	      }
 	    // Iterate along empty part of word and fill it with available symbols
 	    if(m_index < m_word_size && 0 == m_word[m_index])
