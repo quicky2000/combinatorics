@@ -70,6 +70,13 @@ namespace combinatorics
 			 );
 
     /**
+       Method to indicate that first part of the word is invalid so that
+       enumerator avoid to generate more word with this root
+       @param number of items composing root
+     */
+    inline void invalidate_root(unsigned int p_nb_items);
+
+    /**
        Destructor
      */
     inline ~enumerator(void);
@@ -253,6 +260,20 @@ namespace combinatorics
 	    release(m_index);
 	  }
       }
+  }
+
+  //----------------------------------------------------------------------------
+  void enumerator::invalidate_root(unsigned int p_nb_items)
+  {
+    assert(p_nb_items);
+    for(unsigned int l_index = p_nb_items;
+	l_index < m_word_size;
+	++l_index)
+      {
+	release(l_index);
+      }
+    m_index = p_nb_items - 1;
+    go_back();
   }
 
   //----------------------------------------------------------------------------
