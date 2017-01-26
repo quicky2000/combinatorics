@@ -17,6 +17,7 @@
 
 #include "quicky_exception.h"
 #include "enumeration.h"
+#include "formula.h"
 #include <iostream>
 
 int main(int argc,char ** argv)
@@ -25,6 +26,10 @@ int main(int argc,char ** argv)
     {
       std::vector<combinatorics::symbol> l_symbols = {combinatorics::symbol(1,1),combinatorics::symbol(2,2),combinatorics::symbol(3,3)};
       combinatorics::enumerate(l_symbols);
+      std::cout << combinatorics::fact<1>::compute() << std::endl;
+      std::cout << combinatorics::fact<2>::compute() << std::endl;
+      std::cout << combinatorics::fact<3>::compute() << std::endl;
+      std::cout << combinatorics::fact<4>::compute() << std::endl;
     }
   catch(quicky_exception::quicky_runtime_exception & e)
     {
