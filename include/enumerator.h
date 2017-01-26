@@ -23,6 +23,7 @@
 #include <iostream>
 #include <cassert>
 #include <vector>
+#include <cstring>
 
 namespace combinatorics
 {
@@ -72,6 +73,14 @@ namespace combinatorics
        Destructor
      */
     inline ~enumerator(void);
+
+    /**
+       Method to compare external word with current word assuming they have the
+       same size
+       @param pointer on external word
+    */
+    inline int compare_word(unsigned int * p_word);
+
   private:
     /**
        Remove value from index of word, increment corresponding number and
@@ -129,6 +138,15 @@ namespace combinatorics
 	  m_word[l_index] = 0;
 	}
     }
+
+
+  //----------------------------------------------------------------------------
+  int enumerator::compare_word(unsigned int * p_word)
+  {
+    assert(p_word);
+    return memcmp(p_word, m_word, m_word_size*sizeof(unsigned int));
+  }
+
 
   //----------------------------------------------------------------------------
   unsigned int enumerator::release(unsigned int p_index)
