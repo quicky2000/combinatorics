@@ -210,7 +210,6 @@ namespace combinatorics
 	    // Check if end of word is reached
 	    if(m_word_size == m_index)
 	      {
-		++m_count;
 		// Go back along word to prepare next iteration
 		m_index = m_word_size - 1;
 		bool l_reverse_end = false;
@@ -267,6 +266,7 @@ namespace combinatorics
 		take(m_index,m_symbol_table[l_symbol_index].get_index());
 		++m_index;
 	      }
+	    m_count += m_index == m_word_size;
 	    l_generation_end |= m_index == m_word_size;
 	  }
       }
