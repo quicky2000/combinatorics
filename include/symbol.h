@@ -39,7 +39,7 @@ namespace combinatorics
     unsigned int m_max_number;
   };
 
-  std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol)
+  inline std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol)
     {
       p_stream << (char)('A' - 1 + p_symbol.m_index) ;
       return p_stream;
