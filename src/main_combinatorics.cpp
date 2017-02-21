@@ -15,6 +15,7 @@
       along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
+#ifdef COMBINATORICS_SELF_TEST
 #include "quicky_exception.h"
 #include "enumeration.h"
 #include "formula.h"
@@ -91,4 +92,5 @@ int main(int argc,char ** argv)
     }
   return EXIT_SUCCESS;
 }
+#endif // COMBINATORICS_SELF_TEST
 // EOF
