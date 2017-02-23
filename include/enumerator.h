@@ -177,7 +177,7 @@ namespace combinatorics
   int enumerator::compare_word(unsigned int * p_word)
   {
     assert(p_word);
-    return memcmp(p_word, m_word, m_word_size*sizeof(unsigned int));
+    return memcmp(m_word, p_word, m_word_size*sizeof(unsigned int));
   }
 
 
