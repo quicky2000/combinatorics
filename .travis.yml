@@ -29,5 +29,5 @@ before_install:
 script:
   - generate_makefile combinatorics
   - make test
-  - ./bin/combinatorics.exe
+  - ./bin/combinatorics.exe > run.log
 #EOF
