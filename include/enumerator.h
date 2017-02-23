@@ -97,6 +97,11 @@ namespace combinatorics
     */
     inline int compare_word(unsigned int * p_word);
 
+    /**
+       Method to know the word size in case it was not specified
+       @return word size
+    **/
+    inline unsigned int get_word_size(void) const;
   private:
     /**
        Remove value from index of word, increment corresponding number and
@@ -162,6 +167,11 @@ namespace combinatorics
 	}
     }
 
+  //----------------------------------------------------------------------------
+  unsigned int enumerator::get_word_size(void) const
+  {
+    return m_word_size;
+  }
 
   //----------------------------------------------------------------------------
   int enumerator::compare_word(unsigned int * p_word)
