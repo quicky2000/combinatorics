@@ -74,6 +74,62 @@ int main(int argc,char ** argv)
       std::cout << combinatorics::formula::A(6,4) << "\t" << combinatorics::A<6,4>::m_value <<  std::endl;
       std::cout << combinatorics::formula::A(6,5) << "\t" << combinatorics::A<6,5>::m_value <<  std::endl;
       std::cout << combinatorics::formula::A(6,6) << "\t" << combinatorics::A<6,6>::m_value <<  std::endl;
+
+
+      // Detect rotations by considering a size 8 word as a square with border of size 2
+      std::vector<combinatorics::symbol> l_symbols2 =
+	{
+	  combinatorics::symbol(1,1),
+	  combinatorics::symbol(2,1),
+	  combinatorics::symbol(3,1),
+	  combinatorics::symbol(4,1),
+	  combinatorics::symbol(5,1),
+	  combinatorics::symbol(6,1),
+	  combinatorics::symbol(7,1),
+	  combinatorics::symbol(8,1),
+	};
+      combinatorics::enumerator l_enumerator(l_symbols2);
+      unsigned int l_reference_word[8];
+      unsigned int l_reference_word2[8];
+      unsigned int l_reference_word3[8];
+      unsigned int l_tmp_word[8];
+      bool l_ok = l_enumerator.generate();
+      if(!l_ok)
+	{
+	  throw quicky_exception::quicky_logic_exception("Unable to generate first word", __LINE__, __FILE__);
+	}
+      l_enumerator.display_word();
+      l_enumerator.get_word(l_tmp_word,8);
+      for(unsigned int l_index = 0;
+	  l_index < 8;
+	  ++l_index
+	  )
+	{
+	  l_reference_word[l_index] = l_tmp_word[(l_index + 2) % 8];
+	  l_reference_word2[l_index] = l_tmp_word[(l_index + 4) % 8];
+	  l_reference_word3[l_index] = l_tmp_word[(l_index + 6) % 8];
+	}
+
+      while(l_enumerator.generate())
+      {
+	l_enumerator.display_word();
+	if(!l_enumerator.compare_word(l_reference_word))
+	  {
+	    std::cout << "1 <===========>" << std::endl ;
+	    //  exit(0);
+	  }
+	if(!l_enumerator.compare_word(l_reference_word2))
+	  {
+	    std::cout << "2 <===========>" << std::endl ;
+	    //exit(0);
+	  }
+	if(!l_enumerator.compare_word(l_reference_word3))
+	  {
+	    std::cout << "3 <===========>" << std::endl ;
+	    exit(0);
+	  }
+      }
+
     }
   catch(quicky_exception::quicky_runtime_exception & e)
     {
