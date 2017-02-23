@@ -65,7 +65,7 @@ namespace combinatorics
        @param pointer on word
        @param word size. it should be less or equal than enumerator word size
      */
-    inline void set_word(unsigned int * p_word,
+    inline void set_word(const unsigned int * const p_word,
 			 unsigned int p_word_size
 			 );
 
@@ -232,7 +232,7 @@ namespace combinatorics
   }
 
   //----------------------------------------------------------------------------
-  void enumerator::set_word(unsigned int * p_word,
+  void enumerator::set_word(const unsigned int * const p_word,
 			    unsigned int p_word_size
 			    )
   {
