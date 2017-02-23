@@ -70,6 +70,15 @@ namespace combinatorics
 			 );
 
     /**
+       get word
+       @param pointer on word
+       @param word size. it should be less or equal than enumerator word size
+     */
+    inline void get_word(unsigned int * const p_word,
+			 unsigned int p_word_size
+			 ) const;
+
+    /**
        Method to indicate that first part of the word is invalid so that
        enumerator avoid to generate more word with this root
        @param number of items composing root
@@ -260,6 +269,15 @@ namespace combinatorics
 	    release(m_index);
 	  }
       }
+  }
+
+  //----------------------------------------------------------------------------
+  void enumerator::get_word(unsigned int * const p_word,
+			    unsigned int p_word_size
+			    ) const
+  {
+    assert(p_word_size <= m_word_size);
+    memcpy(p_word, m_word, p_word_size * sizeof(unsigned int));
   }
 
   //----------------------------------------------------------------------------
