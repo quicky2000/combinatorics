@@ -294,6 +294,7 @@ namespace combinatorics
   void enumerator::invalidate_root(unsigned int p_nb_items)
   {
     assert(p_nb_items);
+    assert(p_nb_items <= m_word_size);
     for(unsigned int l_index = p_nb_items;
 	l_index < m_word_size;
 	++l_index)
