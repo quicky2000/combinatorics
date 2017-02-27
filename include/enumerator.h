@@ -24,6 +24,7 @@
 #include <cassert>
 #include <vector>
 #include <cstring>
+#include <cinttypes>
 
 namespace combinatorics
 {
@@ -53,7 +54,7 @@ namespace combinatorics
        Method returning the index of current combination: 0 for the first
        @return index of current combination
     */
-    inline unsigned int get_count(void)const;
+    inline const uint64_t & get_count(void)const;
 
     /**
        Display word content
@@ -131,7 +132,7 @@ namespace combinatorics
     unsigned int m_total_nb_symbol;
     unsigned int m_word_size;
     unsigned int m_index;
-    unsigned int m_count;
+    uint64_t m_count;
     bool m_continu;
   };
 
@@ -339,7 +340,7 @@ namespace combinatorics
   }
 
   //----------------------------------------------------------------------------
-  unsigned int enumerator::get_count(void)const
+  const uint64_t & enumerator::get_count(void)const
   {
     return m_count;
   }
