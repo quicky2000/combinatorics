@@ -80,6 +80,14 @@ namespace combinatorics
 			 ) const;
 
     /**
+       get word
+       @param p_index : index of item in the word. it should be less or equal
+       than enumerator word size
+     */
+    inline unsigned int get_word_item(unsigned int p_index
+				      ) const;
+
+    /**
        Method to indicate that first part of the word is invalid so that
        enumerator avoid to generate more word with this root
        @param number of items composing root
@@ -281,6 +289,15 @@ namespace combinatorics
 	  }
       }
   }
+
+  //----------------------------------------------------------------------------
+  unsigned int enumerator::get_word_item(unsigned int p_index
+					 ) const
+  {
+    assert(p_index < m_word_size);
+    return m_word[p_index];
+  }
+
 
   //----------------------------------------------------------------------------
   void enumerator::get_word(unsigned int * const p_word,
