@@ -111,6 +111,14 @@ namespace combinatorics
        @return word size
     **/
     inline unsigned int get_word_size(void) const;
+
+    /**
+       Method to know minimum index that has been changed by latest call to
+       generate method.
+       WARNING : minimum index is invalid when generate call return false
+       @return minimum index
+     **/
+    inline unsigned int get_min_index(void) const;
   private:
     /**
        Remove value from index of word, increment corresponding number and
@@ -140,6 +148,12 @@ namespace combinatorics
     unsigned int m_total_nb_symbol;
     unsigned int m_word_size;
     unsigned int m_index;
+
+    /**
+       Store minimum index that has been changed by latest generate call
+    **/
+    unsigned int m_min_index;
+
     uint64_t m_count;
     bool m_continu;
   };
@@ -153,6 +167,7 @@ namespace combinatorics
     m_total_nb_symbol(0),
     m_word_size(p_word_size),
     m_index(0),
+    m_min_index(0),
     m_count(0),
     m_continu(true)
     {
@@ -256,6 +271,7 @@ namespace combinatorics
 	      }
 	  }
       }
+    m_min_index = m_index - 1;
     return l_generation_end;
   }
 
@@ -382,6 +398,13 @@ namespace combinatorics
   {
     delete[] m_word;
   }
+
+  //----------------------------------------------------------------------------
+  unsigned int enumerator::get_min_index(void) const
+  {
+    return m_min_index;
+  }
+
 }
 #endif // _ENUMERATOR_H_
 //EOF
