@@ -154,6 +154,16 @@ int main(int argc,char ** argv)
 	      l_enumerator.display_word();
 	    }
 	}
+	std::cout << "======================" << std::endl ;
+	{
+	  combinatorics::enumerator l_enumerator(l_symbols);
+	  l_enumerator.set_word("CCBCAB");
+	  l_enumerator.set_count(56);
+	  while(l_enumerator.generate())
+	    {
+	      l_enumerator.display_word();
+	    }
+	}
       }
 
     }

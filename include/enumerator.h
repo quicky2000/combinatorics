@@ -79,6 +79,12 @@ namespace combinatorics
 			 );
 
     /**
+       Set word from a string produced by display_word
+       @param string representing the word
+    **/
+    inline void set_word(const std::string & p_string);
+
+    /**
        get word
        @param pointer on word
        @param word size. it should be less or equal than enumerator word size
@@ -300,6 +306,35 @@ namespace combinatorics
 	)
       {
 	take(m_index,p_word[m_index]);
+      }
+    // Initialise remaining part of word
+    for(unsigned int l_index = m_index;
+	l_index < m_word_size;
+	++l_index
+	)
+      {
+	if(m_word[m_index])
+	  {
+	    release(m_index);
+	  }
+      }
+  }
+
+  //----------------------------------------------------------------------------
+  void enumerator::set_word(const std::string & p_string)
+  {
+    assert(p_string.size() <= m_word_size);
+
+    // Set continu to true to be able to call generate
+    m_continu = true;
+
+    // Copy word
+    for(m_index = 0;
+	m_index < p_string.size();
+	++m_index
+	)
+      {
+	take(m_index,1 + p_string[m_index] - 'A');
       }
     // Initialise remaining part of word
     for(unsigned int l_index = m_index;
