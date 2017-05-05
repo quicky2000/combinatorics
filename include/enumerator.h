@@ -57,6 +57,14 @@ namespace combinatorics
     inline const uint64_t & get_count(void)const;
 
     /**
+       Method to define the index of current combination.
+       It could be useful when used with set_word to restart an interrupted
+       generation at the same point it was stopped
+       @param index of current combination
+    */
+    void set_count(const uint64_t & p_count);
+
+    /**
        Display word content
      */
     inline void display_word(void)const;
@@ -376,6 +384,12 @@ namespace combinatorics
   const uint64_t & enumerator::get_count(void)const
   {
     return m_count;
+  }
+
+  //----------------------------------------------------------------------------
+  void enumerator::set_count(const uint64_t & p_count)
+  {
+    m_count = p_count;
   }
 
   //----------------------------------------------------------------------------

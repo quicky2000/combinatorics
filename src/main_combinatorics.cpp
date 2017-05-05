@@ -126,8 +126,34 @@ int main(int argc,char ** argv)
 	if(!l_enumerator.compare_word(l_reference_word3))
 	  {
 	    std::cout << "3 <===========>" << std::endl ;
-	    exit(0);
+	    break;
 	  }
+      }
+      {
+	std::vector<combinatorics::symbol> l_symbols =
+	  {
+	    combinatorics::symbol(1,1),
+	    combinatorics::symbol(2,2),
+	    combinatorics::symbol(3,3)
+	  };
+	{
+	  combinatorics::enumerator l_enumerator(l_symbols);
+	  while(l_enumerator.generate())
+	    {
+	      l_enumerator.display_word();
+	    }
+	}
+	std::cout << "======================" << std::endl ;
+	{
+	  unsigned int l_init_word[6] = {3,3,1,2,2,3};
+	  combinatorics::enumerator l_enumerator(l_symbols);
+	  l_enumerator.set_word(l_init_word,6);
+	  l_enumerator.set_count(49);
+	  while(l_enumerator.generate())
+	    {
+	      l_enumerator.display_word();
+	    }
+	}
       }
 
     }
