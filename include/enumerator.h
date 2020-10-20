@@ -62,7 +62,7 @@ namespace combinatorics
        generation at the same point it was stopped
        @param index of current combination
     */
-    void set_count(const uint64_t & p_count);
+    inline void set_count(const uint64_t & p_count);
 
     /**
        Display word content
