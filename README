@@ -2,4 +2,11 @@
 # Summary 
 #----------
 The aim of this project is to provide combinatorial analysis tools
+
+Continuous integration with Travis-Ci:
+https://app.travis-ci.com/github/quicky2000/combinatorics
+
+# LICENSE
+#--------
+Please see LICENSE for info on the license.
 #EOF
