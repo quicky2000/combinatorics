@@ -8,12 +8,10 @@ matrix:
       sudo: required
       dist: focal
       compiler: gcc
-    - os: linux
-      sudo: required
-      dist: bionic
-      compiler: gcc
+      env: DISTRIB_NAME=focal
     - os: osx
       osx_image: xcode14.2
+      env: DISTRIB_NAME=macos
 
 language: cpp
 
