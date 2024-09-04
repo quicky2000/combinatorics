@@ -15,48 +15,47 @@
       along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#ifndef _META_MAX_H_
-#define _META_MAX_H_
+#ifndef COMBINATORICS_META_MAX_H
+#define COMBINATORICS_META_MAX_H
 
 #include <cinttypes>
 
 namespace combinatorics
 {
-  template <uint64_t N, uint64_t P>
-  class max
-  {
-  public:
-    static const uint64_t m_value;
-  private:
-    template <uint64_t N2, uint64_t P2, bool B>
-    class max_implem
-      {
-      public:
-	static const uint64_t m_value;
-      };
+    template <uint64_t N, uint64_t P>
+    class max
+    {
+    public:
+        static const uint64_t m_value;
+    private:
+        template <uint64_t N2, uint64_t P2, bool B>
+        class max_implem
+        {
+        public:
+            static const uint64_t m_value;
+        };
 
-    template <uint64_t N2, uint64_t P2>
-    class max_implem<N2,P2,true>
-      {
-      public:
-	static const uint64_t m_value = N2;
-      private:
-      };
+        template <uint64_t N2, uint64_t P2>
+        class max_implem<N2,P2,true>
+        {
+        public:
+            static const uint64_t m_value = N2;
+        private:
+        };
 
-    template <uint64_t N2, uint64_t P2>
-      class max_implem<N2,P2,false>
-      {
-      public:
-	static const uint64_t m_value = P2;
-      private:
-      };
+        template <uint64_t N2, uint64_t P2>
+        class max_implem<N2,P2,false>
+        {
+        public:
+            static const uint64_t m_value = P2;
+        private:
+        };
+    };
 
-  };
-
-  //----------------------------------------------------------------------------
-  template <uint64_t N, uint64_t P>
-  const uint64_t max<N,P>::m_value = max_implem<N,P, (N > P)>::m_value;
+    //----------------------------------------------------------------------------
+    template <uint64_t N, uint64_t P>
+    const uint64_t max<N,P>::m_value = max_implem<N,P, (N > P)>::m_value;
 
 }
-#endif // _META_MAX_H_
+#endif // COMBINATORICS_META_MAX_H
 //EOF

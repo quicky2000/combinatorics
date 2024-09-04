@@ -15,48 +15,48 @@
       along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#ifndef _META_MIN_H_
-#define _META_MIN_H_
+#ifndef COMBINATORICS_META_MIN_H
+#define COMBINATORICS_META_MIN_H
 
 #include <cinttypes>
 
 namespace combinatorics
 {
-  template <uint64_t N, uint64_t P>
-  class min
-  {
-  public:
-    static const uint64_t m_value;
-  private:
-    template <uint64_t N2, uint64_t P2, bool B>
-    class min_implem
-      {
-      public:
-	static const uint64_t m_value;
-      };
+    template <uint64_t N, uint64_t P>
+    class min
+    {
+    public:
+        static const uint64_t m_value;
+    private:
+        template <uint64_t N2, uint64_t P2, bool B>
 
-    template <uint64_t N2, uint64_t P2>
-    class min_implem<N2,P2,true>
-      {
-      public:
-	static const uint64_t m_value = N2;
-      private:
-      };
+        class min_implem
+        {
+        public:
+            static const uint64_t m_value;
+        };
 
-    template <uint64_t N2, uint64_t P2>
-      class min_implem<N2,P2,false>
-      {
-      public:
-	static const uint64_t m_value = P2;
-      private:
-      };
+        template <uint64_t N2, uint64_t P2>
+        class min_implem<N2,P2,true>
+        {
+        public:
+            static const uint64_t m_value = N2;
+        private:
+        };
 
-  };
+        template <uint64_t N2, uint64_t P2>
+        class min_implem<N2,P2,false>
+        {
+        public:
+            static const uint64_t m_value = P2;
+        private:
+        };
+    };
 
-  //----------------------------------------------------------------------------
-  template <uint64_t N, uint64_t P>
-  const uint64_t min<N,P>::m_value = min_implem<N,P, (N < P)>::m_value;
+    //----------------------------------------------------------------------------
+    template <uint64_t N, uint64_t P>
+    const uint64_t min<N,P>::m_value = min_implem<N,P, (N < P)>::m_value;
 
 }
-#endif // _META_MIN_H_
+#endif // COMBINATORICS_META_MIN_H
 //EOF

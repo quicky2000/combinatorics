@@ -16,8 +16,8 @@
 */
 
 
-#ifndef _META_C_H_
-#define _META_C_H_
+#ifndef COMBINATORICS_META_C_H
+#define COMBINATORICS_META_C_H
 
 #include "meta_max.h"
 #include "meta_min.h"
@@ -26,37 +26,36 @@
 
 namespace combinatorics
 {
-  template <uint64_t N, uint64_t P>
-  class C
-  {
-  public:
-  static const uint64_t m_value;
-  private:
-  template <uint64_t N2, uint64_t P2, uint64_t D = N2 - P2>
-    class C_implem
+    template <uint64_t N, uint64_t P>
+    class C
     {
     public:
-    static const uint64_t m_value;
-    };
-  
-  template <uint64_t N2, uint64_t P2>
-    class C_implem<N2,P2,0>
-    {
-    public:
-    static const uint64_t m_value = 1;
-    };
-  
-  };
+        static const uint64_t m_value;
 
-  //----------------------------------------------------------------------------
-  template <uint64_t N, uint64_t P>
+    private:
+        template <uint64_t N2, uint64_t P2, uint64_t D = N2 - P2>
+        class C_implem
+        {
+        public:
+            static const uint64_t m_value;
+        };
+  
+        template <uint64_t N2, uint64_t P2>
+        class C_implem<N2,P2,0>
+        {
+        public:
+            static const uint64_t m_value = 1;
+        };
+    };
+
+    //----------------------------------------------------------------------------
+    template <uint64_t N, uint64_t P>
     const uint64_t C<N,P>::m_value = C_implem<N, P>::m_value;
 
-  //----------------------------------------------------------------------------
-  template <uint64_t N, uint64_t P>
-  template <uint64_t N2, uint64_t P2, uint64_t D>
+    //----------------------------------------------------------------------------
+    template <uint64_t N, uint64_t P>
+    template <uint64_t N2, uint64_t P2, uint64_t D>
     const uint64_t C<N,P>::C_implem<N2,P2,D>::m_value = partial_fact<N, max<N - P,P>::m_value + 1>::m_value / fact<min<N - P,P>::m_value>::m_value;
-
 }
-#endif // _META_C_H_
+#endif // COMBINATORICS_META_C_H
 //EOF

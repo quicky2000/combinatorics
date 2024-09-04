@@ -15,24 +15,24 @@
       along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#ifndef _META_A_H_
-#define _META_A_H_
+#ifndef COMBINATORICS_META_A_H
+#define COMBINATORICS_META_A_H
 
 #include <cinttypes>
 
 namespace combinatorics
 {
-  template <uint64_t N, uint64_t P>
+    template <uint64_t N, uint64_t P>
     class A
     {
     public:
-    static const uint64_t m_value;
+        static const uint64_t m_value;
     private:
     };
 
-  //----------------------------------------------------------------------------
-  template <uint64_t N, uint64_t P>
+    //----------------------------------------------------------------------------
+    template <uint64_t N, uint64_t P>
     const uint64_t A<N,P>::m_value = partial_fact<N,N-P+1>::m_value;
 }
-#endif // _META_A_H_
+#endif // COMBINATORICS_META_A_H
 //EOF

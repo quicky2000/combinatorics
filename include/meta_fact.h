@@ -14,38 +14,37 @@
       You should have received a copy of the GNU General Public License
       along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
-#ifndef _FACT_H_
-#define _FACT_H_
+#ifndef COMBINATORICS_FACT_H
+#define COMBINATORICS_FACT_H
 
 #include <cinttypes>
 
 namespace combinatorics
 {
-  template <uint64_t N>
-  class fact
-  {
-  public:
-      static const uint64_t m_value;
-  };
+    template <uint64_t N>
+    class fact
+    {
+    public:
+        static const uint64_t m_value;
+    };
 
-  //----------------------------------------------------------------------------
-  template <uint64_t N>
+    //----------------------------------------------------------------------------
+    template <uint64_t N>
     const uint64_t fact<N>::m_value =  N * fact<N - 1>::m_value;
   
-  template <>
-  class fact<1>
-  {
-  public:
-      static const uint64_t m_value = 1;
-  };
+    template <>
+    class fact<1>
+    {
+    public:
+        static const uint64_t m_value = 1;
+    };
 
-  template <>
-  class fact<0>
-  {
-  public:
-      static const uint64_t m_value = 0;
-  };
-
+    template <>
+    class fact<0>
+    {
+    public:
+        static const uint64_t m_value = 0;
+    };
 }
-#endif // _FACT_H_
+#endif // COMBINATORICS_FACT_H
 // EOF

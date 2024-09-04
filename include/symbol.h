@@ -15,71 +15,88 @@
       along with this program.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#ifndef _SYMBOL_H_
-#define _SYMBOL_H_
+#ifndef COMBINATORICS_SYMBOL_H
+#define COMBINATORICS_SYMBOL_H
 
 #include <iostream>
 #include <cassert>
 
 namespace combinatorics
 {
-  class symbol
-  {
-    friend std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol);
-  public:
-    inline symbol(unsigned int p_index,
-		  unsigned int p_number);
-    inline unsigned int get_index(void) const;
-    inline unsigned int get_number(void) const;
-    inline void decr(void);
-    inline void incr(void);
-  private:
-    unsigned int m_index;
-    unsigned int m_number;
-    unsigned int m_max_number;
-  };
-
-  inline std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol)
+    class symbol
     {
-      p_stream << (char)('A' - 1 + p_symbol.m_index) ;
-      return p_stream;
-    }
+        friend std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol);
+    public:
+        inline
+        symbol(unsigned int p_index, unsigned int p_number);
 
-  //------------------------------------------------------------------------------
-  symbol::symbol(unsigned int p_index,
-		 unsigned int p_number):
-    m_index(p_index),
-    m_number(p_number),
-    m_max_number(p_number)
-      {
-      }
+        inline
+        unsigned int
+        get_index() const;
 
-    //------------------------------------------------------------------------------
-    unsigned int symbol::get_index(void) const
+        inline
+        unsigned int
+        get_number() const;
+
+        inline
+        void
+        decr();
+
+        inline
+        void
+        incr();
+
+    private:
+        unsigned int m_index;
+        unsigned int m_number;
+        unsigned int m_max_number;
+    };
+
+    inline
+    std::ostream & operator<<(std::ostream & p_stream, const symbol & p_symbol)
     {
-      return m_index;
-    }
-
-    //------------------------------------------------------------------------------
-    unsigned int symbol::get_number(void) const
-    {
-      return m_number;
+        p_stream << (char)('A' - 1 + p_symbol.m_index) ;
+        return p_stream;
     }
 
     //------------------------------------------------------------------------------
-    void symbol::decr(void)
+    symbol::symbol(unsigned int p_index, unsigned int p_number)
+    :m_index(p_index)
+    ,m_number(p_number)
+    ,m_max_number(p_number)
     {
-      assert(m_number);
-      --m_number;
     }
 
     //------------------------------------------------------------------------------
-    void symbol::incr(void)
+    unsigned int
+    symbol::get_index() const
     {
-      assert(m_number < m_max_number);
-      ++m_number;
+        return m_index;
+    }
+
+    //------------------------------------------------------------------------------
+    unsigned int
+    symbol::get_number() const
+    {
+        return m_number;
+    }
+
+    //------------------------------------------------------------------------------
+    void
+    symbol::decr()
+    {
+        assert(m_number);
+        --m_number;
+    }
+
+    //------------------------------------------------------------------------------
+    void
+    symbol::incr()
+    {
+        assert(m_number < m_max_number);
+        ++m_number;
     }
 
 }
-#endif // _SYMBOL_H_
+#endif // COMBINATORICS_SYMBOL_H
 //EOF
